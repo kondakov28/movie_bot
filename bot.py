@@ -20,10 +20,7 @@ beginning_button = types.KeyboardButton("Показати спочатку\U0001
 menu_button = types.KeyboardButton("Головне меню\U0001F519")
 keyboard2.add(more_button, beginning_button, menu_button)
 
-# keyboard3 = telebot.types.ReplyKeyboardMarkup(True, True)
-# keyboard3.row("Показати мої улюблені фільми", "Додати до списку моїх улюблених фільмів", "Головне меню")
 user_dict = {}
-
 
 def film_genre(genre_ids):
     genres = []
@@ -133,61 +130,6 @@ def movie_rec(message):
         bot.send_message(message.chat.id, f'Фільм - це життя, із якого вивели плями нудьги\U0001F446',
                          reply_markup=keyboard1)
 
-    # elif message.text == 'Мої улюблені фільми':
-    #     bot.send_message(message.chat.id, 'vavadv', reply_markup=keyboard3)
-    #     if message.text == 'Головне меню':
-    #         bot.send_message(message.chat.id, 'Нумо, вірю в тебе, ти знайдеш свій фільм!',
-    #                          reply_markup=keyboard1)
-
-    # elif message.text == 'Показати мої улюблені фільми':
-    #     with open("favs.json", "r+") as file:
-    #         data = json.load(file)
-    #         show(0, len(data[message.chat.id]['results']), message, data[message.chat.id])
-
-    # elif message.text == 'Додати до списку моїх улюблених фільмів':
-    #     bot.send_message(message.chat.id, 'Введіть фільми які ви хочете додати, по одному')
-
-    # elif message.text == 'Психопаспорт':
-    #     r = requests.get(
-    #         f'https://api.themoviedb.org/3/search/movie?api_key={config.api_key_tmdb}&language=ru&region=UA&'
-    #         f'query={message.text}')
-    #     data = r.json()
-    #     if len(data['results']) == 0:
-    #         bot.send_message(message.chat.id, "Не можу знайти. Спробуй ще раз!")
-    #     with open("favs.json", "r+") as file:
-    #         data = json.load(file)
-    #         data.update(r)
-    #         file.seek(0)
-    #         json.dump(data, file)
-    #     bot.send_message(message.chat.id, 'Фільм додано, якщо хочете вийти, нажміть "Головне меню"')
-    #
-    # else:
-    #     r = requests.get(
-    #         f'https://api.themoviedb.org/3/search/movie?api_key={config.api_key_tmdb}&language=ru&region=UA&'
-    #         f'query={message.text}')
-    #     data = r.json()
-    #     if len(data['results']) == 0:
-    #         bot.send_message(message.chat.id, "Не можу знайти. Спробуй ще раз!")
-    #     sort_by(data, 'vote_average')
-    #     the_most_similar = data['results'][0]['id']
-    #     print(data['results'][0]['title'], data['results'][0]['overview'])
-    #
-    #     r1 = requests.get(
-    #         f'https://api.themoviedb.org/3/movie/{int(the_most_similar)}/recommendations?api_key={config.api_key_tmdb}&'
-    #         f'language=ru&region=UA')
-    #     data = r1.json()
-    #     sort_by(data, 'vote_average')
-    #
-    #     bot.send_message(message.chat.id, "Лови, знайшов найбільш схожі. Бажаю тобі гарного перегляду\U0001F4AB")
-    #
-    #     row_start, row_end = 0, 3
-    #     show(row_start, row_end, message, data)
-    #
-    #     if message.text == 'Показати більше':
-    #         row_start += 3
-    #         row_end += 3
-    #         show(row_start, row_end, message, data)
-
 
 def process_popular(message, data):
     if message.text == "Показати більше\U0001F9D0":
@@ -272,9 +214,6 @@ def process_love(message, data=None, the_most_similar=None):
             f'https://api.themoviedb.org/3/movie/{int(the_most_similar)}/recommendations?api_key={config.api_key_tmdb}&'
             f'language=ru&region=UA')
         data = r1.json()
-        # sort_by(data, 'popularity')
-        # pprint(data)
-
         if len(data['results']) == 0:
             msg = bot.send_message(message.chat.id, 'Це неповторний фільм, схожих ти більше не побачиш\U0001F937')
             bot.register_next_step_handler(msg, process_love)
